@@ -1,0 +1,32 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GET Request Example</title>
+</head>
+<body>
+    <h1>GET Request Example</h1>
+    <button id="fetchDataBtn">Fetch Data</button>
+    <pre id="output"></pre>
+
+    <script>
+        document.getElementById('fetchDataBtn').addEventListener('click', fetchData);
+
+        async function fetchData() {
+            const url = 'https://secure.logmeinrescue.com/API/getSession_v3.aspx?node=15859053&noderef=CHANNEL&authcode=6ort2okzipwxd5pkumg776bwaddqksax8kv5pdb21aasht9epdyy3elnvnjk1m2192ue3iynybha3jvfyfqvwlir2t0tbi70o3mdaa5j8l8anou0d5qe1bsyornp1x0i';
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.text(); // Assuming the response is in text format
+                document.getElementById('output').textContent = data;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById('output').textContent = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
