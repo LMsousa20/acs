@@ -15,8 +15,9 @@
         document.getElementById('fetchDataBtn2').addEventListener('click', fetchData2);
 
         async function fetchData() {
-            const url = 'https://secure.logmeinrescue.com/API/getSession_v3.aspx?node=15859053&noderef=CHANNEL&authcode=6ort2okzipwxd5pkumg776bwaddqksax8kv5pdb21aasht9epdyy3elnvnjk1m2192ue3iynybha3jvfyfqvwlir2t0tbi70o3mdaa5j8l8anou0d5qe1bsyornp1x0i';
-
+            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+            const targetUrl = 'https://secure.logmeinrescue.com/API/getSession_v3.aspx?node=15859053&noderef=CHANNEL&authcode=6ort2okzipwxd5pkumg776bwaddqksax8kv5pdb21aasht9epdyy3elnvnjk1m2192ue3iynybha3jvfyfqvwlir2t0tbi70o3mdaa5j8l8anou0d5qe1bsyornp1x0i';
+            const url = proxyUrl + targetUrl;
             try {
                 const response = await fetch(url);
                 if (!response.ok) {
@@ -31,7 +32,9 @@
         }
 
         async function fetchData2() {
-            const url = 'https://secure.logmeinrescue.com/API/requestAuthCode.aspx?email=lucas.acsinformatica@gmail.com&pwd=acs@2410';
+            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+            const targetUrl = 'https://secure.logmeinrescue.com/API/requestAuthCode.aspx?email=lucas.acsinformatica@gmail.com&pwd=acs@2410';
+            const url = proxyUrl + targetUrl;
 
             try {
                 const response = await fetch(url);
