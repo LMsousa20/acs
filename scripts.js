@@ -1,5 +1,5 @@
-// document.getElementById('fetchDataBtn2').addEventListener('click', fetchData2);
-// document.getElementById('fetchDataBtn').addEventListener('click', fetchData);
+document.getElementById('fetchDataBtn2').addEventListener('click', fetchData2);
+document.getElementById('fetchDataBtn').addEventListener('click', fetchData);
 let code = ''
 let respData =''
 let fila = '';
@@ -69,7 +69,7 @@ function pipeToObjects(input) {
         headers.forEach((header, index) => {
             console.log(header)
             if(header === 'Language' || header === 'Custom Field 5' || header === 'Is Lead Technician' || header === 'HandingOff'){
-                console.log('EEEEEEEERRRRRRRRRRRROOOOOOOOOOOOOOOOUUUUUUUUUU')
+                // console.log('EEEEEEEERRRRRRRRRRRROOOOOOOOOOOOOOOOUUUUUUUUUU')
             }else{
                 obj[header.trim()] = fields[index];
 
@@ -89,7 +89,7 @@ function pipeToObjects(input) {
     // document.body.innerHTML += 
     espera = objects.filter((x)=> x.Status === 'Waiting')
     // console.log(espera);
-    arrayToTable(espera,'espera')    
+    incluidoTabelas(espera,'espera')    
     
     console.log(objects);
     fila = objects.filter((y)=> {
@@ -102,7 +102,7 @@ function pipeToObjects(input) {
     
     )
     // console.log(fila);
-    arrayToTable(fila,'fila')    
+    incluidoTabelas(fila,'fila')    
     // return objects:
 }
 
@@ -120,7 +120,7 @@ async function fetchData() {
         const data = await response.text(); // Assuming the response is in text format
         document.getElementById('output').textContent = data;
         respData = pipeToObjects(data);
-        document.body.innerHTML += arrayToTable(respData);
+        document.body.innerHTML += incluidoTabelas(respData);
         // console.log(pipeToObjects(data));
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -161,7 +161,7 @@ async function fetchData2() {
 }
 
 // Você pode usar este código para transformá-lo em uma tabela HTML:
-async function arrayToTable(array,isFila) {
+async function incluidoTabelas(array,isFila) {
 
   // Criar o cabeçalho da tabela
     let headers = Object.keys(array[0]).map((key) => {
