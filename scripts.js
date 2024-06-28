@@ -5,6 +5,13 @@ let respData = ''
 let fila = '';
 let espera = '';
 
+let quantAtt= [];
+let tecTransf = []
+const tecnAtt = []
+const attAtivo = []
+let totalEspera = '0';
+let totalFila = '0';
+
 let substituicoes = {
     "ID": "ID",
     "Status": "Status",
@@ -227,6 +234,10 @@ async function getAuthCode() {
 // inRespApi(teste)
 
 async function incluidoTabelas(array, isFila) {
+
+    if (isFila === 'espera') {
+        totalEspera = array.length
+    }
     
     function removerChave(arr) {
         arr.forEach(obj => {
@@ -241,8 +252,6 @@ async function incluidoTabelas(array, isFila) {
             }
         });
         
-    
-        
     }
     
     removerChave(array);
@@ -255,8 +264,12 @@ async function incluidoTabelas(array, isFila) {
     // Criar as linhas da tabela
     let rows = array.map((obj) => {
         let isDanger=false;
+        let isAtive=false;
        if(obj['Tempo Espera'] > 2025 ){
         isDanger = true
+       }
+       if(obj['Status'] === 'Active' ){
+        isAtive = true
        }
         let cells = Object.keys(obj).map((key) => {
             if(key === 'TELEFONE'){
@@ -272,17 +285,25 @@ async function incluidoTabelas(array, isFila) {
          </td>`;
             }else if(key === 'Status'){
                 let newStatus = traduzirStatus(`${obj[key]}`)
-                return `<td>${newStatus}</td>`;
+                return `<td>${newStatus.toUpperCase()}</td>`;
+            }else if(key === 'Técnico' && isAtive === true){
+                tecnAtt.push(obj[key])
+                return `<td>${obj[key].toUpperCase()}</td>`;
             }
-            return `<td>${obj[key]}</td>`;
+            return `<td>${(obj[key].toUpperCase())}</td>`;
         }).join('');
         if(isDanger){
             return `<tr class="table-danger">${cells}</tr>`;
         }
         return `<tr>${cells}</tr>`;
     }).join('');
-    document.getElementById(`${isFila}`).innerHTML += `<thead class='table-dark'><tr>${headers}</tr></thead><tbody>${rows}</tbody>`;
+    document.getElementById(`${isFila}`).innerHTML = `<thead class='table-dark'><tr>${headers}</tr></thead><tbody>${rows}</tbody>`;
+      setTimeout(renderTable,500)
 
+
+}
+
+function renderTable(){
     $(document).ready( function () {
         $('#espera').DataTable();
     } );
@@ -290,8 +311,8 @@ async function incluidoTabelas(array, isFila) {
     $(document).ready( function () {
         $('#fila').DataTable();
     } );
-    
-    
+totalFila = tecnAtt.length
+    UpGraf()    
 }
 
 
@@ -318,6 +339,8 @@ function validadorTelefone(numberTel) {
     return 'Numero invalido'
 
 }
+
+
 
 
 //     let teste1 = attEspera.filter((x) => x.children[10])
@@ -349,4 +372,52 @@ function validadorTelefone(numberTel) {
 //                 tabelaLinha.children[t].style.backgroundColor = 'pink';
 
 
+function UpGraf() {
+    console.log('PRODUZINDO')
 
+    tecnAtt.forEach((x) => {
+        var tec = tecnAtt.filter((t) => t == x)
+        // console.log(tec, "tec do filter", tec[0])
+        // console.log(tecTransf.indexOf(tec[0]), "indexOf")
+        if (tecTransf.indexOf(tec[0]) === -1) {
+            const addTec =
+            {
+                nome: tec[0],
+                quantidade: tec.length
+            }
+            // console.log(addTec)
+            // console.log('entrou no IF')
+            attAtivo.push(addTec)
+            tecTransf.push(tec[0])
+        }
+    }
+    )
+    // console.log(attAtivo)
+
+
+    let myline1 = '<Td align="center" style="border: 2px #787373 solid;font-size: 19px; ">Tecnicos</Td>'
+    let myline2 = '<Td align="center" style="border: 2px #787373 solid;font-size: 19px;">Quantidade</Td>'
+    attAtivo.forEach((x => {
+        myline1 += `<td align="center" style="border: 2px #787373 solid;font-size: 19px;">${x.nome}</td>`;
+        myline2 += `<td align="center" style="border: 2px #787373 solid;font-size: 19px;">${x.quantidade}</td>`;
+    }))
+    myline1 += `<td align="center" style="border: 2px #787373 solid;font-size: 19px;">TOTAL DA ATENDIMENTO</td>
+    <td align="center" style="border: 2px #787373 solid;font-size: 19px;">TOTAL DA FILA</td>`;
+    myline2 += `<td align="center" style="border: 2px #787373 solid;font-size: 19px;">${totalFila}</td>
+    <td align="center" style="border: 2px #787373 solid;font-size: 19px;">${totalEspera}</td>`;
+
+    const navegacao = document.getElementById('graphic');
+    
+    // console.log(navegacao[0])
+    navegacao.innerHTML = `<div id="mytablecount">
+    <table class='table  table-dark table-sm table-hover table-striped rounded-2' width="1400px" align="center" style="border: 2px #787373 solid;font-size: 19px;" >
+    <tr id="tablemyline1">
+        ${myline1.toUpperCase()}
+    </tr>
+    <tr id="tablemyline2">
+         ${myline2.toUpperCase()}
+    </tr>
+   </table></div>
+  `
+
+}
