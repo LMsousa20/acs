@@ -285,9 +285,9 @@ async function incluidoTabelas(array, isFila) {
        if(obj['Tempo Espera'] > 2025 ){
              isDanger = true
        }
-       seguntdos = obj['Tempo Espera']
-       obj['Tempo Espera'] = segundosParaTempo(seguntdos);
-       console.log(tempoFormatado);  // Saída: "01:10:02"
+       segundos = obj['Tempo Espera']
+       obj['Tempo Espera'] = segundosParaTempo(segundos);
+       console.log(segundosParaTempo(segundos));  // Saída: "01:10:02"
 
        if(obj['Status'] === 'Active' ){
         isAtive = true
