@@ -49,12 +49,12 @@ function traduzirStatus(statusEmIngles) {
     const traducoes = {
         "Aborted: technician was deleted or disabled": "Abortado: técnico foi deletado ou desativado",
         "Active": "Ativo",
-        "Closed by active customer": "Fechado pelo cliente ativo",
-        "Closed by customer": "Fechado pelo cliente",
-        "Closed by technician": "Fechado pelo técnico",
-        "Closed by waiting customer": "Fechado pelo cliente em espera",
+        "Closed by active customer": "Fechado p client ativo",
+        "Closed by customer": "Fechado p client",
+        "Closed by technician": "Fechado p técnico",
+        "Closed by waiting customer": "Fechado p client em espera",
         "Connecting": "Conectando",
-        "Declined by customer": "Recusado pelo cliente",
+        "Declined by customer": "Recusado p client",
         "Disconnected": "Desconectado",
         "Expired": "Expirado",
         "Not available": "Indisponível",
@@ -65,7 +65,7 @@ function traduzirStatus(statusEmIngles) {
         "Reconnecting": "Reconectando",
         "Revoked": "Revogado",
         "Timed out": "Tempo esgotado",
-        "Timed out: closed by technician": "Tempo esgotado: fechado pelo técnico",
+        "Timed out: closed by technician": "Tempo: fechado p téc",
         "Transferred": "Transferido",
         "Transferring": "Transferindo",
         "Waiting": "Esperando"
@@ -282,7 +282,7 @@ async function incluidoTabelas(array, isFila) {
     let rows = array.map((obj) => {
         let isDanger=false;
         let isAtive=false;
-       if(obj['Tempo Espera'] > 2025 ){
+       if(obj['Tempo Espera'] > 1500 ){
              isDanger = true
        }
        segundos = obj['Tempo Espera']
