@@ -12,6 +12,23 @@ const attAtivo = []
 let totalEspera = '0';
 let totalFila = '0';
 
+function segundosParaTempo(segundos) {
+    // Calcula horas, minutos e segundos
+    let horas = Math.floor(segundos / 3600);
+    segundos %= 3600;
+    let minutos = Math.floor(segundos / 60);
+    let segundosFinais = segundos % 60;
+
+    // Formatação para garantir que sempre haja dois dígitos
+    horas = horas < 10 ? '0' + horas : horas;
+    minutos = minutos < 10 ? '0' + minutos : minutos;
+    segundosFinais = segundosFinais < 10 ? '0' + segundosFinais : segundosFinais;
+
+    // Retorna no formato hh:mm:ss
+    return horas + ':' + minutos + ':' + segundosFinais;
+}
+
+
 let substituicoes = {
     "ID": "ID",
     "Status": "Status",
@@ -266,8 +283,12 @@ async function incluidoTabelas(array, isFila) {
         let isDanger=false;
         let isAtive=false;
        if(obj['Tempo Espera'] > 2025 ){
-        isDanger = true
+             isDanger = true
        }
+       seguntdos = obj['Tempo Espera']
+       obj['Tempo Espera'] = segundosParaTempo(seguntdos);
+       console.log(tempoFormatado);  // Saída: "01:10:02"
+
        if(obj['Status'] === 'Active' ){
         isAtive = true
        }
@@ -421,3 +442,11 @@ function UpGraf() {
   `
 
 }
+
+setTimeout(fetchData,700)
+
+function refresh(){
+    location.reload();
+}
+
+setTimeout(refresh,60000)
