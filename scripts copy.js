@@ -194,9 +194,9 @@ function inRespApi(input) {
 
 
 async function fetchData() {
-    // const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    const targetUrl = `https://proxy-logmein.onrender.com/API/getSession_v3.aspx?node=15859053&noderef=CHANNEL&authcode=${code}`;
-    const url = targetUrl;
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    const targetUrl = `https://secure.logmeinrescue.com/API/getSession_v3.aspx?node=15859053&noderef=CHANNEL&authcode=${code}`;
+    const url = proxyUrl + targetUrl;
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -215,9 +215,9 @@ async function fetchData() {
 }
 
 async function getAuthCode() {
-    const targetUrl = 'https://proxy-logmein.onrender.com/API/requestAuthCode.aspx?email=lucas.acsinformatica@gmail.com&pwd=acs@2410';
-    // const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    const url = targetUrl;
+    const targetUrl = 'https://secure.logmeinrescue.com/API/requestAuthCode.aspx?email=lucas.acsinformatica@gmail.com&pwd=acs@2410';
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    const url = proxyUrl + targetUrl;
     
     try {
         const response = await fetch(url);
